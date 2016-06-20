@@ -1,0 +1,221 @@
+
+%% bare_conf.tex
+%% V1.3
+
+%
+\documentclass[10pt, conference, compsocconf]{IEEEtran}
+% Add the compsocconf option for Computer Society conferences
+
+\usepackage{comment}
+\usepackage{lineno,hyperref}
+
+% Begin my packages
+%\usepackage[labelformat=simple,font=small]{subcaption}
+%\usepackage{subfigure}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\captionsetup[sub]{font=scriptsize}
+\usepackage{epstopdf}
+\usepackage{lscape}
+\usepackage{longtable}
+\usepackage{url}
+%\captionsetup{belowskip=5pt,aboveskip=4pt}   % control the space between caption and table
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{algorithm}
+%\usepackage{algcompatible}
+%\usepackage[linesnumbered]{algorithm2e}
+\usepackage{algpseudocode}
+\usepackage{multicol}
+\usepackage{csquotes}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\newcommand{\lowerromannumeral}[1]{\romannumeral#1\relax}
+
+\usepackage{amsmath}
+\usepackage{comment}
+%\renewcommand\thesubfigure{(\alph{subfigure})}
+\usepackage{mfirstuc}
+\usepackage[acronym]{glossaries}
+\makeglossaries
+
+% Acronym definitions
+\newacronym{NB}{NB}{naive Bayes}
+\newacronym{SVM}{SVM}{Support Vector Machine}
+\newacronym{SFS}{SFS}{Sequential Forward Selection}
+\newacronym{SBS}{SBS}{Sequential Backward Selection}
+\newacronym{GA}{GA}{Genetic Algorithms}
+\newacronym{ASFS-AGA}{ASFS-AGA}{Adapted Sequential Forward Selection - Adapted Genetic Algorithm}
+\newacronym{HGA}{HGA}{Hybrid Genetic Algorithms}
+\newacronym{UCI}{UCI}{University of California Irvine}
+
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\algnewcommand{\LineComment}[1]{\State \(\triangleright\) #1}
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+
+\else
+
+\fi
+
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+%
+% paper title
+% can use linebreaks \\ within to get better formatting as desired
+\title{Experimental Results of Autoencoder Features With/Without Fine-tuning}
+
+
+% author names and affiliations
+% use a multiple column layout for up to two different
+% affiliations
+
+\begin{comment}
+\author{\IEEEauthorblockN{Authors Name/s per 1st Affiliation (Author)}
+\IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
+line 2: name of organization, acronyms acceptable\\
+line 3: City, Country\\
+line 4: Email: name@xyz.com}
+\and
+\IEEEauthorblockN{Authors Name/s per 2nd Affiliation (Author)}
+\IEEEauthorblockA{line 1 (of Affiliation): dept. name of organization\\
+line 2: name of organization, acronyms acceptable\\
+line 3: City, Country\\
+line 4: Email: name@xyz.com}
+}
+\end{comment}
+
+
+
+\maketitle
+
+
+\begin{abstract}
+
+
+\end{abstract}
+
+\begin{IEEEkeywords}
+
+
+\end{IEEEkeywords}
+
+
+% For peer review papers, you can put extra information on the cover
+% page as needed:
+% \ifCLASSOPTIONpeerreview
+% \begin{center} \bfseries EDICS Category: 3-BBND \end{center}
+% \fi
+%
+% For peerreview papers, this IEEEtran command inserts a page break and
+% creates the second title. It will be ignored for other modes.
+\IEEEpeerreviewmaketitle
+
+
+
+\section{Introduction}
+
+In the previous experiments (ICDAR, HIP, and DAS), Kai, Oussama, and Me used Mathias' framework to extract autoencoder features.
+Generally, these features were learned by autoencoders without fine-tuning (if I am correct).
+In our HIP paper and also my thesis, we observed that: \textit{a significant number of autoencoder features are redundant or irrelevant for layout classification.}
+This observation can be explained by the fact that autoencoders (without fine-tuning) are trained for reconstruction, rather than classification.
+%Thus some of the learned features may be not helpful for layout classification.
+
+Autoencoders with fine-tuning are a kind of supervised feature learning technique (if I am correct).
+The learned features are supposed to be optimal or nearly optimal for classification.
+In other words, the learned features are supposed to be less redundant and less irrelevant for classification, compared to features learned by autoencoders without fine-tuning.
+This is an important motivation of our following experiments.
+
+
+In the initial experiments, we investigate redundancy and irrelevance of features leaned by autoencoders with/without fine-tuning.
+We use autoencoder features to perform layout analysis, which classifies pixels on an image into five classes: out of page, background, comments, decorations, and text.
+Sequential Forward Selection (SFS) is used for feature selection.
+The results are shown in Table~\ref{table:AE}.
+
+Table~\ref{table:AE} shows that for all classifiers using features learned by autoencoders with/without fine-tuning, generally feature dimension is decreased significantly, and comparable accuracy is obtained.
+So from Table~\ref{table:AE}, we have two observations.
+(1) Regarding features learned with fine-tuning, a significant number of them are redundant or irrelevant for layout classification.
+This observation is similar with our previous observations about features learned by autoencoders without fine-tuning.
+(2) Regarding redundancy and irrelevance, there is no significant difference between features learned with and without fine-tuning.
+In other words, regardless of whether autoencoder features are learned with or without fine-tuning, they are equally redundant and irrelevant for layout classification in general.
+
+
+
+
+
+
+\begin{table*}[t]
+\begin{center}
+\caption{Investigation of redundancy and irrelevance of features leaned by autoencoders with/without fine-tuning.
+The used classifiers are Support Vector Machine (SVM), Naive Bayes (NB), a decision algorithm (C4.5), and k-Nearest Neighbors (k-NN) where k=1.
+} 
+\label{table:AE}
+\begin{tabular}{C{3cm} | C{3cm} | C{3cm} | C{3cm} | C{3cm}} 
+\toprule 
+Classifier & Autoencoders & Features & Dimension & Accuracy \\
+\midrule
+\multirow{4}{*}{SVM} & \multirow{2}{*}{With fine-tuning} & Full features & 46 & 53.57 \\
+
+ &  & Selected features & 24 & 53.99 \\
+
+\cmidrule(r){2-5}
+& \multirow{2}{*}{Without fine-tuning} & Full features & 46 & 54.99 \\
+
+& & Selected features & 23 & 55.28 \\
+
+\midrule
+\multirow{4}{*}{NB} & \multirow{2}{*}{With fine-tuning} & Full features & 46 & 48.09 \\
+
+ &  & Selected features & 11 & 51.14 \\
+
+\cmidrule(r){2-5}
+& \multirow{2}{*}{Without fine-tuning} & Full features & 46 & 46.56 \\
+
+& & Selected features & 15 & 50.37\\
+
+\midrule
+\multirow{4}{*}{C4.5} & \multirow{2}{*}{With fine-tuning} & Full features & 46 & 53.64 \\
+
+ &  & Selected features & 14 & 53.82 \\
+
+\cmidrule(r){2-5}
+& \multirow{2}{*}{Without fine-tuning} & Full features & 46 & 55.61 \\
+
+& & Selected features & 13 & 54.50\\
+\midrule
+\multirow{4}{*}{1-NN} & \multirow{2}{*}{With fine-tuning} & Full features &  46 & 55.09 \\
+
+ &  & Selected features & 27 & 53.30 \\
+
+\cmidrule(r){2-5}
+& \multirow{2}{*}{Without fine-tuning} & Full features & 46 & 56.78 \\
+
+& & Selected features & 29 & 56.02 \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table*}
+
+
+
+\end{document}
+
+
