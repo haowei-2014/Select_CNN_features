@@ -1,0 +1,208 @@
+
+
+\documentclass[conference]{IEEEtran}
+
+\usepackage{comment}
+\usepackage{lineno,hyperref}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\captionsetup[sub]{font=scriptsize}
+\usepackage{epstopdf}
+\usepackage{lscape}
+\usepackage{longtable}
+\usepackage{url}
+%\captionsetup{belowskip=5pt,aboveskip=4pt}   % control the space between caption and table
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{algorithm}
+%\usepackage{algcompatible}
+%\usepackage[linesnumbered]{algorithm2e}
+\usepackage{algpseudocode}
+\usepackage{multicol}
+\usepackage{csquotes}
+
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\newcommand{\lowerromannumeral}[1]{\romannumeral#1\relax}
+
+\usepackage{amsmath}
+\usepackage{comment}
+%\renewcommand\thesubfigure{(\alph{subfigure})}
+\usepackage{mfirstuc}
+\usepackage[acronym]{glossaries}
+\makeglossaries
+
+% Acronym definitions
+\newacronym{NB}{NB}{naive Bayes}
+
+
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\ifCLASSINFOpdf
+
+\else
+
+\fi
+
+
+% correct bad hyphenation here
+\hyphenation{op-tical net-works semi-conduc-tor}
+
+
+\begin{document}
+%
+
+\title{Experimental Results of Autoencoder Features With Fine-tuning}
+
+
+\begin{comment}
+
+\author{\IEEEauthorblockN{Michael Shell}
+\IEEEauthorblockA{School of Electrical and\\Computer Engineering\\
+Georgia Institute of Technology\\
+Atlanta, Georgia 30332--0250\\
+Email: http://www.michaelshell.org/contact.html}
+\and
+\IEEEauthorblockN{Homer Simpson}
+\IEEEauthorblockA{Twentieth Century Fox\\
+Springfield, USA\\
+Email: homer@thesimpsons.com}
+\and
+\IEEEauthorblockN{James Kirk\\ and Montgomery Scott}
+\IEEEauthorblockA{Starfleet Academy\\
+San Francisco, California 96678--2391\\
+Telephone: (800) 555--1212\\
+Fax: (888) 555--1212}}
+
+\end{comment}
+
+
+% make the title area
+\maketitle
+
+% As a general rule, do not put math, special symbols or citations
+% in the abstract
+\begin{abstract}
+
+\end{abstract}
+
+% no keywords
+
+
+
+\IEEEpeerreviewmaketitle
+
+
+
+\section{Introduction}
+
+
+
+In the previous experiments (ICDAR, HIP, and DAS), Kai, Oussama, and Me used Mathias' framework to extract autoencoder features.
+Generally, these features were learned by autoencoders without fine-tuning (if I am correct).
+In our HIP paper and also my thesis, we observed that: \textit{a significant number of autoencoder features are redundant or irrelevant for layout classification.}
+This observation can be explained by the fact that autoencoders (without fine-tuning) are trained for reconstruction, rather than classification.
+%Thus some of the learned features may be not helpful for layout classification.
+
+Autoencoders with fine-tuning are a kind of supervised feature learning technique (if I am correct).
+The learned features are supposed to be optimal or nearly optimal for classification.
+In other words, the learned features are supposed to be less redundant and less irrelevant for classification, compared to features learned by autoencoders without fine-tuning.
+This is an important motivation of our following experiments.
+
+
+
+
+
+
+
+
+
+
+\section{CNN Architecture}
+
+\section{Sequential Forward Selection}
+
+
+\section{Experimental Results}
+
+
+In the experiments, we investigate redundancy and irrelevance of features leaned by autoencoders with fine-tuning.
+We use autoencoder features to perform layout analysis, which classifies pixels on an image into five classes: out of page, background, comments, decorations, and text.
+Sequential Forward Selection (SFS) is used for feature selection.
+The results are shown in Table~\ref{table:AE}.
+
+Table~\ref{table:AE} shows that for all classifiers using features learned by autoencoders with fine-tuning, generally feature dimension is decreased significantly, and comparable accuracy is obtained.
+So from Table~\ref{table:AE}, we have the following observations.
+Regarding features learned with fine-tuning, a significant number of them are redundant or irrelevant for layout classification.
+This observation is similar with our previous observations about features learned by autoencoders without fine-tuning.
+
+In addition, regarding redundancy and irrelevance, there is no significant difference between features learned with and without fine-tuning.
+In other words, regardless of whether autoencoder features are learned with or without fine-tuning, they are equally redundant and irrelevant for layout classification in general.
+
+
+\begin{table*}[t]
+\begin{center}
+\caption{Investigation of redundancy and irrelevance of features leaned by autoencoders with fine-tuning.
+The used classifiers are Support Vector Machine (SVM), Naive Bayes (NB), a decision algorithm (C4.5), and k-Nearest Neighbors (k-NN) where k=1.
+} 
+\label{table:AE}
+\begin{tabular}{C{3cm} | C{3cm} | C{3cm} | C{3cm}} 
+\toprule 
+Classifier & Features & Dimension & Accuracy \\
+\midrule
+\multirow{2}{*}{SVM}  & Full features & 46 &  \\
+
+ &  Selected features &  &  \\
+
+\cmidrule(r){1-4}
+
+\multirow{2}{*}{NB}  & Full features & 46 & 88.10 \\
+
+ &  Selected features & 7 & 85.81 \\
+
+\cmidrule(r){1-4}
+
+\multirow{2}{*}{C4.5}  & Full features & 46 & 77.34 \\
+
+ &  Selected features & 9 & 81.83 \\
+
+\cmidrule(r){1-4}
+
+\multirow{2}{*}{k-NN}  & Full features & 46 & 77.91 \\
+
+ &  Selected features & 22 & 77.28 \\
+
+
+\bottomrule
+\end{tabular}
+\end{center}
+\end{table*}
+
+
+\section{Conclusions}
+
+
+\begin{thebibliography}{1}
+
+\bibitem{IEEEhowto:kopka}
+
+
+\end{thebibliography}
+
+
+
+
+% that's all folks
+\end{document}
+
+
